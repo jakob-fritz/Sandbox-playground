@@ -24,7 +24,9 @@ jobs:
         run: |
           echo "Current permission level is ${{ steps.query_permission_triggering_actor.outputs.user-permission }}"
           echo "Job originally triggered by ${{ github.actor }}"
-          exit !steps.query_permission_triggering_actor.outputs.require-result
+          fine = (steps.query_permission_triggering_actor.outputs.require-result=="admin") || (steps.query_permission_triggering_actor.outputs.require-result=="write")
+          echo fine
+          exit fine
       - name: Pass if workflow from push or schedule
         if: >-
           (github.event_name == 'push') ||
