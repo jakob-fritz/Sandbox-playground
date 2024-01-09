@@ -13,7 +13,7 @@ jobs:
     steps:
       - name: Query permissions of triggering actor
         id: query_permission_triggering_actor
-        if: github.event_name == 'pull_request_target'
+        # if: github.event_name == 'pull_request_target'
         uses: actions-cool/check-user-permission@v2
         with:
           username: ${{ github.triggering_actor }}
