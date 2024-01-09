@@ -20,7 +20,7 @@ jobs:
           require: 'write'
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Interpret the queried result
-        if: github.event_name == 'pull_request_target'
+        # if: github.event_name == 'pull_request_target'
         run: |
           echo "Current permission level is ${{ steps.query_permission_triggering_actor.outputs.user-permission }}"
           echo "Job originally triggered by ${{ github.actor }}"
