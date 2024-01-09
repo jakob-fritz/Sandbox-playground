@@ -24,7 +24,7 @@ jobs:
         run: |
           echo "Current permission level is ${{ steps.query_permission_triggering_actor.outputs.user-permission }}"
           echo "Job originally triggered by ${{ github.actor }}"
-          if [ $steps.query_permission_triggering_actor.outputs.require-result = 'admin' || $steps.query_permission_triggering_actor.outputs.require-result = 'write' ]
+          if [ ${{ steps.query_permission_triggering_actor.outputs.require-result }} = 'admin' || ${{ steps.query_permission_triggering_actor.outputs.require-result }} = 'write' ]
             then
               echo 'Permissions granted'
               exit 0
