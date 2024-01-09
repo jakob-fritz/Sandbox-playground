@@ -25,7 +25,7 @@ jobs:
           echo "Current permission level is ${{ steps.query_permission_triggering_actor.outputs.user-permission }}"
           echo "Job originally triggered by ${{ github.actor }}"
           echo "Checking permission returned ${{ steps.query_permission_triggering_actor.outputs.require-result }}"
-          if [ ${{ steps.query_permission_triggering_actor.outputs.require-result }} ]
+          if ${{ steps.query_permission_triggering_actor.outputs.require-result }}
             then
               echo 'Permissions granted'
               exit 0
