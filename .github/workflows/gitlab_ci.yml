@@ -60,5 +60,6 @@ jobs:
         run: echo "Mirroring takes place here"
       - name: Print file to know commit
         run: |
+          echo "${{ github.event.pull_request.head.sha }}"
           ls -lah
           cat example.md
