@@ -58,3 +58,7 @@ jobs:
           persist-credentials: false
       - name: Mirror and wait for Gitlab-CI
         run: echo "Mirroring takes place here"
+      - name: Print file to know commit
+        run: |
+          ls -lah
+          cat example.md
