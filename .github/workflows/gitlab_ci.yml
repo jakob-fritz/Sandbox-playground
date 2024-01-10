@@ -13,18 +13,19 @@ jobs:
     steps:
       - name: Query permissions of triggering actor
         id: query_permission_triggering_actor
-        # if: github.event_name == 'pull_request_target'
+        if: github.event_name == 'pull_request_target'
         uses: actions-cool/check-user-permission@v2
         with:
           username: ${{ github.triggering_actor }}
           require: 'write'
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Interpret the queried result
-        # if: github.event_name == 'pull_request_target'
+        if: github.event_name == 'pull_request_target'
         run: |
           echo "Current permission level is ${{ steps.query_permission_triggering_actor.outputs.user-permission }}"
           echo "Job originally triggered by ${{ github.actor }}"
-          if [ ${{ steps.query_permission_triggering_actor.outputs.require-result }} = 'admin' || ${{ steps.query_permission_triggering_actor.outputs.require-result }} = 'write' ]
+          echo "Checking permission returned ${{ steps.query_permission_triggering_actor.outputs.require-result }}"
+          if ${{ steps.query_permission_triggering_actor.outputs.require-result }}
             then
               echo 'Permissions granted'
               exit 0
@@ -51,8 +52,13 @@ jobs:
       - check_permission
     steps:
       - name: Checkout
-        uses: actions/checkout@v1
+        uses: actions/checkout@v3
         with:
-          ref: ${{ github.event.pull_request.head.sha }}
+          ref: "${{ github.event.pull_request.merge_commit_sha }}"
+          persist-credentials: false
       - name: Mirror and wait for Gitlab-CI
         run: echo "Mirroring takes place here"
+      - name: Print file to know commit
+        run: |
+          ls -lah
+          cat example.md
