@@ -13,14 +13,18 @@ jobs:
     steps:
       - name: Query permissions of triggering actor
         id: query_permission_triggering_actor
-        if: github.event_name == 'pull_request_target'
+        if: >-
+            (github.event_name == 'pull_request_target') &&
+            (contains(github.event.pull_request.labels.*.name, 'gitlab-mirror'))
         uses: actions-cool/check-user-permission@v2
         with:
           username: ${{ github.triggering_actor }}
           require: 'write'
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Interpret the queried result
-        if: github.event_name == 'pull_request_target'
+        if: >-
+            (github.event_name == 'pull_request_target') &&
+            (contains(github.event.pull_request.labels.*.name, 'gitlab-mirror'))
         run: |
           echo "Current permission level is ${{ steps.query_permission_triggering_actor.outputs.user-permission }}"
           echo "Job originally triggered by ${{ github.actor }}"
@@ -38,12 +42,12 @@ jobs:
           (github.event_name == 'push') ||
           (github.event_name == 'schedule')
         run: exit 0
-      - name: Fail for other triggers
-        if: >-
-          (github.event_name != 'push') &&
-          (github.event_name != 'schedule') &&
-          (github.event_name != 'pull_request_target')
-        run: exit 1
+      # - name: Fail for other triggers
+      #   if: >-
+      #     (github.event_name != 'push') &&
+      #     (github.event_name != 'schedule') &&
+      #     (github.event_name != 'pull_request_target')
+      #   run: exit 1
 
   mirror_to_gitlab:
     runs-on: ubuntu-latest
