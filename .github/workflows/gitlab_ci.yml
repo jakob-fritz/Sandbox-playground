@@ -13,7 +13,9 @@ jobs:
         (github.repository_owner == 'jakob-fritz') &&
         ((github.event_name == 'push') ||
          (github.event_name == 'schedule') ||
-         (github.event_name == 'pull_request_target')
+         ((github.event_name == 'pull_request_target') &&
+          (contains(github.event.pull_request.labels.*.name, 'gitlab-mirror'))
+         )
         )
     steps:
       - name: Query permissions of triggering actor
@@ -32,8 +34,6 @@ jobs:
           echo "Current permission level is ${{ steps.query_permission_triggering_actor.outputs.user-permission }}"
           echo "Job originally triggered by ${{ github.actor }}"
           echo "Checking permission returned ${{ steps.query_permission_triggering_actor.outputs.require-result }}"
-          echo "Gitlab-mirror label is used: ${{ contains(github.event.pull_request.labels.*.name, 'gitlab-mirror') }}"
-          echo "Github repo owner is: ${{ github.repository_owner }}"
           if ${{ steps.query_permission_triggering_actor.outputs.require-result }}
             then
               echo 'Permissions granted'
