@@ -9,13 +9,19 @@ on:
 jobs:
   check_permission:
     runs-on: ubuntu-latest
-    # if: github.repository_owner == 'Parallel-in-Time'
+    if: >-
+        (github.repository_owner == 'jakob-fritz') &&
+        ((github.event_name == 'push') ||
+         (github.event_name == 'schedule') ||
+         ((github.event_name == 'pull_request_target') &&
+          (contains(github.event.pull_request.labels.*.name, 'gitlab-mirror'))
+         )
+        )
     steps:
       - name: Query permissions of triggering actor
         id: query_permission_triggering_actor
         if: >-
-            (github.event_name == 'pull_request_target') &&
-            (contains(github.event.pull_request.labels.*.name, 'gitlab-mirror'))
+            (github.event_name == 'pull_request_target')
         uses: actions-cool/check-user-permission@v2
         with:
           username: ${{ github.triggering_actor }}
@@ -23,8 +29,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Interpret the queried result
         if: >-
-            (github.event_name == 'pull_request_target') &&
-            (contains(github.event.pull_request.labels.*.name, 'gitlab-mirror'))
+            (github.event_name == 'pull_request_target')
         run: |
           echo "Current permission level is ${{ steps.query_permission_triggering_actor.outputs.user-permission }}"
           echo "Job originally triggered by ${{ github.actor }}"
@@ -51,7 +56,14 @@ jobs:
 
   mirror_to_gitlab:
     runs-on: ubuntu-latest
-    # if: ${{ github.repository_owner == 'Parallel-in-Time'}}
+    if: >-
+        (github.repository_owner == 'jakob-fritz') &&
+        ((github.event_name == 'push') ||
+         (github.event_name == 'schedule') ||
+         ((github.event_name == 'pull_request_target') &&
+          (contains(github.event.pull_request.labels.*.name, 'gitlab-mirror'))
+         )
+        )
     needs:
       - check_permission
     steps:
