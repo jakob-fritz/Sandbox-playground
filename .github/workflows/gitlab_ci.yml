@@ -3,6 +3,11 @@ name: Mirror to Gitlab to trigger CI
 on:
   push:
   pull_request_target:
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - labeled
   schedule:
     - cron: '1 5 2 * *'
 
@@ -78,8 +83,6 @@ jobs:
           then
             echo "USED_SHA=${{ github.event.pull_request.head.sha }}" >> "$GITHUB_ENV"
           fi
-          echo "$GITHUB_ENV"
-          echo "${{ env.USED_SHA }}"
       - name: Checkout
         uses: actions/checkout@v3
         with:
