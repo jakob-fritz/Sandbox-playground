@@ -72,13 +72,14 @@ jobs:
           echo "${{ github.event_name }}"
           if [ "${{ github.event_name }}" == 'push' ] || [ "${{ github.event_name }}" == 'schedule' ]
           then
-            echo "{USED_SHA}={github.sha}" >> "$GITHUB_ENV"
+            echo "USED_SHA=${{ github.sha }}" >> "$GITHUB_ENV"
           fi
           if [ "${{ github.event_name }}" == 'pull_request_target' ]
           then
-            echo "{USED_SHA}={github.event.pull_request.head.sha}" >> "$GITHUB_ENV"
+            echo "USED_SHA=${{ github.event.pull_request.head.sha }}" >> "$GITHUB_ENV"
           fi
           echo "$GITHUB_ENV"
+          echo "${{ env.USED_SHA }}"
       - name: Checkout
         uses: actions/checkout@v3
         with:
