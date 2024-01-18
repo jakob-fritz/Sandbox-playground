@@ -69,6 +69,7 @@ jobs:
     steps:
       - name: set proper sha
         run: |
+          echo "${{ github.event_name }}"
           if [ "${{ github.event_name }}" == 'push' ] || [ "${{ github.event_name }}" == 'schedule' ]
           then
             echo "{USED_SHA}={github.sha}" >> "$GITHUB_ENV"
@@ -77,6 +78,7 @@ jobs:
           then
             echo "{USED_SHA}={github.event.pull_request.head.sha}" >> "$GITHUB_ENV"
           fi
+          echo "$GITHUB_ENV"
       - name: Checkout
         uses: actions/checkout@v3
         with:
