@@ -67,15 +67,25 @@ jobs:
     needs:
       - check_permission
     steps:
+      - name: set proper sha
+        run: |
+          if [ "${github.event_name}" == 'push' ] || [ "${github.event_name}" == 'schedule' ]
+          then
+            echo "{USED_SHA}={github.sha}" >> "$GITHUB_ENV"
+          fi
+          if [ "${github.event_name}" == 'pull_request_target' ]
+          then
+            echo "{USED_SHA}={github.event.pull_request.head.sha}" >> "$GITHUB_ENV"
+          fi
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          ref: "${{ github.event.pull_request.merge_commit_sha }}"
+          ref: "${{ env.USED_SHA }}"
           persist-credentials: false
       - name: Mirror and wait for Gitlab-CI
         run: echo "Mirroring takes place here"
       - name: Print file to know commit
         run: |
-          echo "${{ github.event.pull_request.head.sha }}"
+          echo "${{ env.USED_SHA }}"
           ls -lah
           cat example.md
