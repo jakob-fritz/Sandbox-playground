@@ -95,3 +95,5 @@ jobs:
           echo "${{ env.USED_SHA }}"
           ls -lah
           cat example.md
+      - name: List all env-vars
+        run: set | grep GITHUB_
