@@ -91,7 +91,9 @@ jobs:
       - name: Mirror and wait for Gitlab-CI
         run: echo "Mirroring takes place here"
       - name: List all env-vars
-        run: set | grep GITHUB_
+        run: |
+          set | grep GITHUB_
+          set | grep PULL
       - name: Print file to know commit
         run: |
           echo "${{ env.USED_SHA }}"
