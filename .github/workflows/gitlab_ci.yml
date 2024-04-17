@@ -97,3 +97,28 @@ jobs:
           echo "${{ env.USED_SHA }}"
           ls -lah
           cat example.md
+
+  set_envs_test:
+    runs-on: ubuntu-latest
+    needs:
+      - check_permission
+    steps:
+      - name: set proper sha
+        run: |
+          echo "New branch shall be named: TEMPORARY_MERGE_PR_${{ github.event_name }}"
+          echo "MIRROR_BRANCH=TEMPORARY_MERGE_PR_${{ github.event_name }}" >> $GITHUB_ENV
+          echo "Create new branch ${{ env.MIRROR_BRANCH }} and check it out"
+
+          echo "${{ github.event_name }}"
+          if [ "${{ github.event_name }}" == 'push' ] || [ "${{ github.event_name }}" == 'schedule' ]
+          then
+            echo "USED_SHA=${{ github.sha }}" >> "$GITHUB_ENV"
+          fi
+          if [ "${{ github.event_name }}" == 'pull_request_target' ]
+          then
+            echo "USED_SHA=${{ github.event.pull_request.head.sha }}" >> "$GITHUB_ENV"
+          fi
+      - name: Print file to know commit
+        run: |
+          echo "${{ env.USED_SHA }}"
+          echo "${{ env.MIRROR_BRANCH }}"
