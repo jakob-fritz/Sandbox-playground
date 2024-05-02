@@ -8,8 +8,6 @@ on:
       - synchronize
       - reopened
       - labeled
-  schedule:
-    - cron: '1 5 2 * *'
 
 jobs:
   check_permission:
