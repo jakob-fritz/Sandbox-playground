@@ -9,7 +9,7 @@ jobs:
     steps:
       - name: Create one file
         run: |
-          echo "Workflow is named: ${{ GITHUB_RUN_ID }}" > workflow_a.txt
+          echo "Workflow is named: ${{ github.job }}" > workflow_a.txt
       - name: Upload results
         uses: actions/upload-artifact@v4
         with:
@@ -21,7 +21,7 @@ jobs:
     steps:
       - name: Create another file
         run: |
-          echo "Workflow is named: ${{ GITHUB_RUN_ID }}" > workflow_b.txt
+          echo "Workflow is named: ${{ github.job }}" > workflow_b.txt
       - name: Upload results
         uses: actions/upload-artifact@v4
         with:
