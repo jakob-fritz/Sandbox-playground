@@ -1,4 +1,4 @@
-name: Workflow A
+name: Workflow C
 
 on:
   workflow_run:
