@@ -1,13 +1,6 @@
 name: Mirror to Gitlab to trigger CI
 
-on:
-  push:
-  pull_request_target:
-    types:
-      - opened
-      - synchronize
-      - reopened
-      - labeled
+on: "gollum"
 
 jobs:
   check_permission:
@@ -107,7 +100,7 @@ jobs:
           MIRROR_BRANCH="TEMPORARY_MERGE_PR_${{ github.event_name }}"
           echo "MIRROR_BRANCH=$MIRROR_BRANCH" >> $GITHUB_ENV
           echo "Create new branch $MIRROR_BRANCH and check it out"
-
+          
           echo "${{ github.event_name }}"
           if [ "${{ github.event_name }}" == 'push' ] || [ "${{ github.event_name }}" == 'schedule' ]
           then
