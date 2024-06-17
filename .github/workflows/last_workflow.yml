@@ -4,6 +4,7 @@ on:
   workflow_run:
     workflows:
       - "Workflow A"
+      - "Workflow B"
     types:
       - "completed"
 
@@ -37,3 +38,4 @@ jobs:
         run: |
           pwd
           ls -lah
+          cat workflow_a.txt

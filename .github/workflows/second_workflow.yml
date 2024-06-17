@@ -1,27 +1,27 @@
-name: Workflow A
+name: Workflow B
 
 on:
   push:
 
 jobs:
-  Job_A_1:
+  Job_B_1:
     runs-on: ubuntu-latest
     steps:
       - name: Create one file
         run: |
-          echo "Job is named: Job A 1" > workflow_a.txt
+          echo "Job is named: Job B 1" > workflow_a.txt
       - name: Upload results
         uses: actions/upload-artifact@v4
         with:
           name: workflow_a
           path: workflow_a.txt
         
-  Job_A_2:
+  Job_B_2:
     runs-on: ubuntu-latest
     steps:
       - name: Create another file
         run: |
-          echo "Job is named: Job A 2" > workflow_b.txt
+          echo "Job is named: Job B 2" > workflow_b.txt
       - name: Upload results
         uses: actions/upload-artifact@v4
         with:
