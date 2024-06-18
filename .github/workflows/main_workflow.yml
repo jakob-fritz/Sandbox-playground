@@ -5,10 +5,10 @@ on:
 
 jobs:
   job1:
-    uses: ./.github/workflows/first_workflow.yml@${{ github.sha }}
+    uses: ./.github/workflows/first_workflow.yml
 
   job2:
-    uses: ./.github/workflows/second_workflow.yml@${{ github.sha }}
+    uses: ./.github/workflows/second_workflow.yml
 
   job3:
     runs-on: ubuntu-latest
