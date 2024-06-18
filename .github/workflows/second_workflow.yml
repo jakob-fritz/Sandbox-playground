@@ -9,7 +9,7 @@ jobs:
     steps:
       - name: Create one file
         run: |
-          echo "Job is named: Job B 1" > workflow_a.txt
+          echo "Job is named: Job B 1" > workflow_c.txt
       - name: Upload results
         uses: actions/upload-artifact@v4
         with:
@@ -21,7 +21,7 @@ jobs:
     steps:
       - name: Create another file
         run: |
-          echo "Job is named: Job B 2" > workflow_b.txt
+          echo "Job is named: Job B 2" > workflow_d.txt
       - name: Upload results
         uses: actions/upload-artifact@v4
         with:
