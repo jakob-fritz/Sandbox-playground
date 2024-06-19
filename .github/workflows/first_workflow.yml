@@ -61,7 +61,7 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            github.request('GET /repos/{owner}/{repo}/actions/workflows/{workflow_id}/runs', {
+            const result = github.request('GET /repos/{owner}/{repo}/actions/workflows/{workflow_id}/runs', {
               owner: context.repo.owner,
               repo: context.repo.repo,
               workflow_id: 'second_workflow.yml',
@@ -70,6 +70,8 @@ jobs:
                 'accept': 'application/vnd.github+json'
               }
             })
+            console.log(result)
+            return result
       - name: Test vars
         env:
          Target_Run_ID: ${{ steps.get_id.outputs.result }}
