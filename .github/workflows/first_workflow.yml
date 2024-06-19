@@ -62,8 +62,8 @@ jobs:
         with:
           script: |
             github.request('GET /repos/{owner}/{repo}/actions/workflows/{workflow_id}/runs', {
-              owner: github.repository_owner,
-              repo: 'github.repository_id',
+              owner: context.repo.owner,
+              repo: context.repo.repo,
               workflow_id: 'second_workflow.yml',
               headers: {
                 'X-GitHub-Api-Version': '2022-11-28',
