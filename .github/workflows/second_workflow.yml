@@ -1,8 +1,7 @@
 name: Workflow B
 
 on:
-  # push:
-  "gollum"
+  push:
 
 jobs:
   Job_B_1:
