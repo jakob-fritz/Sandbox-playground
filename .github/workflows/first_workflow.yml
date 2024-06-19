@@ -57,9 +57,12 @@ jobs:
       #     merge-multiple: true
       #     run-id: ${{ RUN_ID_SECONDWF }}
       - name: Set env-var
+        id: get_id
         uses: actions/github-script@v7
         with:
           script: |
-            process.env.RUN_ID_SECONDWF="This is a test";
+            core.setOutput("RUN_ID_SECONDWF","This is a test");
       - name: Test vars
-        run: echo $RUN_ID_SECONDWF
+        env:
+         Target_Run_ID: ${{ steps.get_id.outputs.RUN_ID_SECONDWF }}
+        run: echo "Target run id is $Target_Run_ID"
