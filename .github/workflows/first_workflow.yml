@@ -61,8 +61,6 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            console.log(github)
-            console.log(context);
             const result = await github.request('GET /repos/{owner}/{repo}/actions/workflows/{workflow_id}/runs', {
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -73,9 +71,8 @@ jobs:
               },
               head_sha: context.sha,
             })
-            console.log(context.sha);
-            console.log(result.data.total_count);
-            console.log(result.data.workflow_runs[0]);
+            console.log("SHA of commit" + context.sha);
+            console.log("Found runs of workflow: " + result.data.total_count);
             if (result.data.total_count == 1) {
               return result.data.workflow_runs[0].id
             } else {
@@ -88,3 +85,8 @@ jobs:
         env:
          Target_Run_ID: ${{ steps.get_id.outputs.result }}
         run: echo "Target run id is $Target_Run_ID"
+      - name: Download artifacts from other workflow
+        uses: actions/download-artifact
+        with:
+          merge-multiple: true
+          run-id: ${{ steps.get_id.outputs.result }}
