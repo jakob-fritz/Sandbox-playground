@@ -69,9 +69,9 @@ jobs:
                 'X-GitHub-Api-Version': '2022-11-28',
                 'accept': 'application/vnd.github+json'
               },
-              'head_sha': github.sha,
+              head_sha: github.sha,
             })
-            console.log(result)
+            console.log(github.sha)
             console.log(result.data.total_count)
             if (result.data.total_count == 1) {
               return result.data.workflow_runs[0]
