@@ -69,9 +69,7 @@ jobs:
                 'X-GitHub-Api-Version': '2022-11-28',
                 'accept': 'application/vnd.github+json'
               },
-              query: {
-                'head_sha': github.sha
-              }
+              'head_sha': github.sha,
             })
             console.log(result)
             console.log(result.data.total_count)
