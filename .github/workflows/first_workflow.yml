@@ -71,7 +71,7 @@ jobs:
               },
               head_sha: context.sha,
             })
-            console.log("SHA of commit" + context.sha);
+            console.log("SHA of commit " + context.sha);
             console.log("Found runs of workflow: " + result.data.total_count);
             if (result.data.total_count == 1) {
               return result.data.workflow_runs[0].id
@@ -90,3 +90,7 @@ jobs:
         with:
           merge-multiple: true
           run-id: ${{ steps.get_id.outputs.result }}
+      - name: list files
+        run: |
+          ls -lah
+          cat workflow_c.txt

@@ -9,19 +9,11 @@ jobs:
     steps:
       - name: Create one file
         run: |
-          echo "Job is named: Job B 1" > workflow_c.txt
-      - name: Upload results
-        uses: actions/upload-artifact@v4
-        with:
-          name: workflow_c
-          path: workflow_c.txt
-        
-  Job_B_2:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Create another file
-        run: |
-          echo "Job is named: Job B 2" > workflow_d.txt
+          echo "Used commit is: $GITHUB_SHA" > workflow_c.txt
+          echo "Current time is: $(date) " >> workflow_c.txt
+          echo "Triggering event is: $GITHUB_EVENT_NAME " >> workflow_c.txt
+          cat workflow_c.txt
+
       - name: Upload results
         uses: actions/upload-artifact@v4
         with:
