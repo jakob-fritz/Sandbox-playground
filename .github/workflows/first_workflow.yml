@@ -87,11 +87,9 @@ jobs:
         run: echo "Target run id is $Target_Run_ID"
       - name: Download artifacts from other workflow
         uses: actions/download-artifact@v4
-        env:
-         Target_Run_ID: ${{ steps.get_id.outputs.result }}
         with:
           merge-multiple: true
-          run-id: ${{ Target_Run_ID }}
+          run-id: ${{ steps.get_id.outputs.result }}
       - name: list files
         run: |
           ls -lah
