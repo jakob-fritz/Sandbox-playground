@@ -63,8 +63,6 @@ jobs:
             }
       - name: Wait for other workflow to finish
         uses: actions/github-script@v7  
-        env:
-          RUN_ID: ${{ steps.get_id.outputs.result }}
         with:
           script: |
             async function get_conclusion(run_id) {
@@ -82,7 +80,7 @@ jobs:
               clearInterval(poll_interval)}
             }
             var result;
-            var poll_interval = setInterval(get_conclusion(), 10000, env.RUN_ID);
+            var poll_interval = setInterval(get_conclusion(), 10000, ${{ steps.get_id.outputs.result }});
             console.log("Final result is: " + result);
       - name: Test vars
         env:
