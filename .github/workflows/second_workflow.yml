@@ -19,3 +19,5 @@ jobs:
         with:
           name: workflow_c
           path: workflow_c.txt
+      - name: Wait
+        run: sleep 25
