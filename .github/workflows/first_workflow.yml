@@ -72,7 +72,7 @@ jobs:
             # Wait some seconds
             sleep "$POLL_TIMEOUT"
             # Get the current state of the pipeline and the url of the website
-            run_reply=$(curl --header "PRIVATE-TOKEN: ${{secrets.GIHUB_TOKEN}}" --silent "https://api.github.com/repos/${{GITHUB_REPOSITORY}}/actions/runs/")
+            run_reply=$(curl --header "PRIVATE-TOKEN: ${{secrets.GIHUB_TOKEN}}" --silent "https://api.github.com/repos/$env.GITHUB_REPOSITORY/actions/runs/$RUN_ID")
             ci_status=$(jq -n "$run_reply" | jq -r .conclusion)
             echo "Current pipeline status: ${ci_status}"
           done
