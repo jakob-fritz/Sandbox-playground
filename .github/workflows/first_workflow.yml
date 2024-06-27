@@ -66,16 +66,24 @@ jobs:
           RUN_ID: ${{ steps.get_id.outputs.result }}
           POLL_TIMEOUT: 10
         run: |
-          ci_status = "pending"
+          ci_status="pending"
+          echo "Querying status of workflow $RUN_ID"
           until [ "$ci_status" != "pending" ] && [ "$ci_status" != "running" ]
           do
             # Wait some seconds
             sleep "$POLL_TIMEOUT"
             # Get the current state of the pipeline and the url of the website
-            run_reply=$(curl --header "PRIVATE-TOKEN: ${{secrets.GIHUB_TOKEN}}" --silent "https://api.github.com/repos/$env.GITHUB_REPOSITORY/actions/runs/$RUN_ID")
+            run_reply=$(curl --header "'X-GitHub-Api-Version': '2022-11-28', 'accept': 'application/vnd.github+json'" --silent "https://api.github.com/repos/$env.GITHUB_REPOSITORY/actions/runs/$RUN_ID")
             ci_status=$(jq -n "$run_reply" | jq -r .conclusion)
             echo "Current pipeline status: ${ci_status}"
           done
+          # Set exit code for success or failure  (everything non-success)
+          if [ "$ci_status" = "success" ]; then
+            exit 0
+          else
+            exit 1
+          fi
+
         # with:
         #   script: |
         #     function get_conclusion(run_id) {
