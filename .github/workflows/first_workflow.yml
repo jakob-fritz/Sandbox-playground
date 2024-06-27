@@ -77,9 +77,10 @@ jobs:
             ci_conclusion=$(jq -n "$run_reply" | jq -r .conclusion)
             echo "Current pipeline status: ${ci_conclusion}"
             http_status=$(jq -n "$run_reply" | jq -r .status)
-            if [ "$http_status" != 200 ]; then
+            if [ "$http_status" != 200 ] && [ "$http_status" =~ '^[0-9]+$' ]; then
               echo "Request returned status: ${http_status}"
               exit 1
+            fi
           done
           # Set exit code for success or failure  (everything non-success)
           if [ "$ci_conclusion" = "success" ]; then
