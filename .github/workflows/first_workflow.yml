@@ -41,10 +41,9 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            console.log("Context is " + context);
-            console.log(JSON.stringify(context, null, 4));
+            console.log("Event triggering this workflow is " + context.eventName);
             if (context.eventName == "pull_request_target") {
-              var used_sha = context.event.pull_request.head.sha;
+              var used_sha = context.payload.pull_request.head.repo.sha;
               var used_event = "pull_request";
             } else {
               var used_sha = context.sha;
