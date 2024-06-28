@@ -2,6 +2,7 @@ name: Workflow B
 
 on:
   push:
+  pull_request:
 
 jobs:
   Job_B_1:
