@@ -41,7 +41,8 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            console.log("Triggering event was " + context.eventName)
+            console.log("Event is " + context.event);
+            console.log(JSON.stringify(context.event, null, 4));
             if (context.eventName == "pull_request_target") {
               var used_sha = context.event.pull_request.head.sha;
               var used_event = "pull_request";
