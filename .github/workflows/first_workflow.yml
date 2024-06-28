@@ -36,6 +36,13 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           merge-multiple: true
+      - name: Get Infos on context
+        uses: actions/github-script@v7
+        with:
+          script: |
+            console.log(context.github);
+            console.log("Now eventName")
+            console.log(context.eventName);
       - name: Set env-var
         id: get_id
         uses: actions/github-script@v7
