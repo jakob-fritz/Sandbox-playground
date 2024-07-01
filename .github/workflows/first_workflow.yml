@@ -60,7 +60,7 @@ jobs:
               head_sha: used_sha,
               event: used_event
             })
-            console.log("SHA of commit " + context.sha);
+            console.log("SHA of commit " + used_sha);
             console.log("Found runs of workflow: " + result.data.total_count);
             if (result.data.total_count == 1) {
               return result.data.workflow_runs[0].id
