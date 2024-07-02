@@ -64,7 +64,7 @@ jobs:
             console.log("SHA of commit " + used_sha);
             console.log("Found runs of workflow: " + result.data.total_count);
             if (result.data.total_count == 1) {
-              console.log("Found workflow has id: " + result.data.workflow_runs[i].id);
+              console.log("Found workflow has id: " + result.data.workflow_runs[0].id);
               return result.data.workflow_runs[0].id
             } else {
               console.log("Logging all found workflow ids:");
