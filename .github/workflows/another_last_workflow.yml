@@ -2,14 +2,14 @@ name: Workflow D
 
 on:
   workflow_run:
-    workflows:
-      - "Workflow A"
-    types:
-      - "completed"
+    workflows: ["Workflow A"]
+    types: ["completed"]
+    branches: ["main"]
 
 jobs:
   download:
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: Download artifacts from other workflow
         uses: actions/download-artifact@v4
