@@ -21,3 +21,9 @@ jobs:
         run: |
           pwd
           ls -lah
+      - name: echo variables
+        run: |
+          echo "Event is "
+          echo ${{ github.event.workflow_run.event }}
+          echo "head branch is "
+          echo ${{ github.event.workflow_run.head_branch }}
