@@ -22,6 +22,7 @@ jobs:
           ls -lah
       - name: echo variables
         run: |
+          echo "This is an example branch"
           echo "Event is "
           echo ${{ github.event.workflow_run.event }}
           echo "head branch is "
