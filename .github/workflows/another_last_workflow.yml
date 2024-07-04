@@ -1,0 +1,23 @@
+name: Workflow D
+
+on:
+  workflow_run:
+    workflows:
+      - "Workflow A"
+    types:
+      - "completed"
+
+jobs:
+  download:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifacts from other workflow
+        uses: actions/download-artifact@v4
+        with:
+          merge-multiple: true
+          run-id: ${{ context.payload.workflow_run.id }}
+          github-token: ${{ secrets.GH_ACTION_TOKEN }}
+      - name: List all files
+        run: |
+          pwd
+          ls -lah
