@@ -1,8 +1,9 @@
 name: Workflow B
 
 on:
-  push:
-  pull_request:
+  # push:
+  # pull_request:
+  gollum:
 
 jobs:
   Job_B_1:
