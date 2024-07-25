@@ -1,11 +1,12 @@
 name: Workflow C
 
 on:
-  workflow_run:
-    workflows:
-      - "Workflow A"
-    types:
-      - "completed"
+  # workflow_run:
+  #   workflows:
+  #     - "Workflow A"
+  #   types:
+  #     - "completed"
+  gollum:
 
 jobs:
   download:
