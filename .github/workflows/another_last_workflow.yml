@@ -10,16 +10,16 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
-      - name: Download artifacts from other workflow
-        uses: actions/download-artifact@v4
-        with:
-          merge-multiple: true
-          run-id: ${{ github.event.workflow_run.id }}
-          github-token: ${{ secrets.GH_ACTION_TOKEN }}
-      - name: List all files
-        run: |
-          pwd
-          ls -lah
+      # - name: Download artifacts from other workflow
+      #   uses: actions/download-artifact@v4
+      #   with:
+      #     merge-multiple: true
+      #     run-id: ${{ github.event.workflow_run.id }}
+      #     github-token: ${{ secrets.GH_ACTION_TOKEN }}
+      # - name: List all files
+      #   run: |
+      #     pwd
+      #     ls -lah
       - name: echo variables
         run: |
           echo "This is an example branch"
